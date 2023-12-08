@@ -1,4 +1,4 @@
-# File: v1-tf-gha-test1a.tf
+# tf with env vars fed from OS CLI
 
 terraform {
   required_version = ">= 1.0.0"
@@ -23,35 +23,35 @@ locals {
 provider "digitalocean" {}
 
 # the SERVER_NAME is not as important to set via env var... but we will go ahead and do it
-variable "LINUX_SERVER_NAME" {
+variable "LINUX_SERVER_NAME_2A" {
   type = string
   description = "environment variable for devops user"
   default = "blahServerName"
 }
 
-variable "LINUX_USER_DEVOPS" {
+variable "LINUX_USER_DEVOPS_2A" {
   type = string
   description = "environment variable for devops user"
   default = "blahLinxUser"
 }
 
-variable "LINUX_SSH_KEY" {
+variable "LINUX_SSH_KEY_2A" {
   type = string
   description = "environment variable for devops ssh key"
   default = "blahSshKey"
 }
 
 data "template_file" "my_example_user_data" {
-  template = templatefile("./yamlScripts/tf-cloudinit-dev.yaml",
+  template = templatefile("./yamlScripts/with-envVars.yaml",
     {
-      LINUX_USER_DEVOPS = "${var.LINUX_USER_DEVOPS}",
-      LINUX_SSH_KEY = "${var.LINUX_SSH_KEY}",
+      LINUX_USER_DEVOPS_2A = "${var.LINUX_USER_DEVOPS_2A}",
+      LINUX_SSH_KEY_2A = "${var.LINUX_SSH_KEY_2A}",
     })
 }
 
 resource "digitalocean_droplet" "droplet" {
   image     = "ubuntu-22-04-x64"
-  name      = "${var.LINUX_SERVER_NAME}"
+  name      = "${var.LINUX_SERVER_NAME_2A}"
   region    = local.regions.san_francisco
   size      = local.sizes.nano
   tags      = ["terraform", "docker"]
@@ -63,19 +63,19 @@ output "ip_address" {
   description = "The public IP address of your droplet."
 }
 
-# to see the template file, with env vars in situ, can uncomment this output section
+# If you want to make sure the yaml file was properly filled with env vars, you can uncomment this output statement and terraform will show the env vars in situ
 # output "template_file_contents" {
 #   value = data.template_file.my_example_user_data.rendered
 # }
 
-output "LINUX_SERVER_NAME" {
-  value = "${var.LINUX_SERVER_NAME}"
-}
+# output "LINUX_SERVER_NAME_2A" {
+#   value = "${var.LINUX_SERVER_NAME_2A}"
+# }
 
-output "LINUX_USER_DEVOPS" {
-  value = "${var.LINUX_USER_DEVOPS}"
-}
+# output "LINUX_USER_DEVOPS_2A" {
+#   value = "${var.LINUX_USER_DEVOPS_2A}"
+# }
 
-output "LINUX_SSH_KEY" {
-  value = "${var.LINUX_SSH_KEY}"
-}
+# output "LINUX_SSH_KEY_2A" {
+#   value = "${var.LINUX_SSH_KEY_2A}"
+# }
