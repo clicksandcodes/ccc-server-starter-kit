@@ -63,10 +63,10 @@ output "ip_address" {
   description = "The public IP address of your droplet."
 }
 
-
-output "template_file_contents" {
-  value = data.template_file.my_example_user_data.rendered
-}
+# to see the template file, with env vars in situ, can uncomment this output section
+# output "template_file_contents" {
+#   value = data.template_file.my_example_user_data.rendered
+# }
 
 output "LINUX_SERVER_NAME" {
   value = "${var.LINUX_SERVER_NAME}"
