@@ -42,7 +42,7 @@ variable "LINUX_SSH_KEY" {
 }
 
 data "template_file" "my_example_user_data" {
-  template = templatefile("./yamlScripts/v1-cloudinit-gha-test1a.yaml",
+  template = templatefile("./yamlScripts/tf-cloudinit-dev.yaml",
     {
       LINUX_USER_DEVOPS = "${var.LINUX_USER_DEVOPS}",
       LINUX_SSH_KEY = "${var.LINUX_SSH_KEY}",
