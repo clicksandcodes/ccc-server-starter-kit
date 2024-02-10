@@ -6,18 +6,7 @@ ____________
 
 **[Keep in Mind]**
 👉 Linux/MacOS env vars must be prefixed with TF_VAR_ for tf to find them.
-
-```bash
-# tf only picks up env vars that are prefixed with TF_VAR_
-# The DigitalOcean token is not used within the TF script so it does not need the TF_VAR_ prefix.
-export DIGITALOCEAN_ACCESS_TOKEN=$(op item get "ClicksAndCodes 2A server" --fields label=DO_TOKEN_CCC_120823_2A)
-
-# Note that this set of tf env vars has `&&` connecting them, so copy & paste them as a block.
-export TF_VAR_LINUX_USER_DEVOPS_2A=$(op item get "ClicksAndCodes 2A server" --fields label=LINUX_USER_DEVOPS_2A) &&
-export TF_VAR_LINUX_SSH_KEY_2A=$(op item get "ClicksAndCodes 2A server" --fields label=LINUX_SSH_KEY_2A) &&
-export TF_VAR_LINUX_SERVER_NAME_2A=$(op item get "ClicksAndCodes 2A server" --fields label=LINUX_SERVER_NAME_2A)
-```
-
+- In each section below, find the commands to run to pull env vars out of 1pass
 
 #### Dealing with ssh keys
 
@@ -36,9 +25,100 @@ Host *
   IdentityFile ~/.ssh/yourKeyFilename
 ```
 
+
+______________________________
+### For Server 3M:  Clicks & Codes manually created server, to host 1. Placeholder Website 2. NextJS + Strapi CMS template site
+
+**Server name:**
+  - label: LINUX_SERVER_NAME_3M
+  - name: ubuntu-021024-dev-3m
+  - host: digital ocean
+
+**Description:**
+  - Created with: Terraform, 1pass
+  - Purpose:
+    - This server was created with terraform & 1pass pw calls for env vars
+    - No CICD pipeline.  This is a manual project currently
+    - I am making it manually just to speed along creation of the CCC website & Strapi setup.
+
+**Github links:**
+  - none yet
+
+**List of Digital Projects on the server:**
+
+- **Project 1:**
+  - Name: NextJS Placeholder Website
+  - Description:   It's basically a placeholder of the website, once the template is done
+  - Assets: Simple frontend: 1 nextJS client.
+
+- **Project 2:**
+  - Name: NextJS + Strapi CMS template site
+  - Description: This is the end goal.  NextJS & Strapi client.  A template, containing sections for:
+    - 1. Before & after template
+    - 2. Case study template
+  - Assets:
+    - 1 strapi CMS
+    - 1 nextJS client
+
+- Local laptop Directory: /Users/patrickmeaney/localhost/0-aa-production/ ??????
+
+### Commands for Server 3M.  Load from 1pass to Local Laptop Env to Terraform Env var
+```bash
+# tf only picks up env vars that are prefixed with TF_VAR_
+# The DigitalOcean token is not used within the TF script so it does not need the TF_VAR_ prefix.
+export DIGITALOCEAN_ACCESS_TOKEN=$(op item get "ClicksAndCodes 3M server" --fields label=DO_TOKEN_CCC_021024_3M)
+
+# Note that this set of tf env vars has `&&` connecting them, so copy & paste them as a block.
+export TF_VAR_LINUX_USER_DEVOPS_3M=$(op item get "ClicksAndCodes 3M server" --fields label=LINUX_USER_DEVOPS_3M) &&
+export TF_VAR_LINUX_SSH_KEY_3M=$(op item get "ClicksAndCodes 3M server" --fields label=LINUX_SSH_KEY_3M) &&
+export TF_VAR_LINUX_SERVER_NAME_3M=$(op item get "ClicksAndCodes 3M server" --fields label=LINUX_SERVER_NAME_3M)
+```
+
+___________________________
+### For Server 2A
+
+**Server name:**
+  - label: LINUX_SERVER_NAME_2A
+  - name: ubuntu-120823-dev-2a
+  - host: digital ocean
+
+
+**List of Digital Projects on the server:**
+
+  - Project 1
+    - Created with: Terraform, 1pass
+    - Purpose:
+      - This server was created with terraform (& 1pass pw calls for env vars) to work on automated CICD pipeline.
+      - The CICD pipeline is the one which unrolls two docker containers (nginx, certbot) to automate HTTPS setup
+
+    - just the ccc-nginx-certbot project
+      - nginx
+      - certbot
+      - CICD github action workflow
+
+**Github links:**
+  - https://github.com/clicksandcodes/ccc-nginx-certbot
+Local laptop Directory:
+  - /Users/patrickmeaney/localhost/0-aa-production/1-ccc-projects-infra/ccc-nginx-certbot
+
+### Commands for Server 2A.  Load from 1pass to Local Laptop Env to Terraform Env var
+```bash
+# tf only picks up env vars that are prefixed with TF_VAR_
+# The DigitalOcean token is not used within the TF script so it does not need the TF_VAR_ prefix.
+export DIGITALOCEAN_ACCESS_TOKEN=$(op item get "ClicksAndCodes 2A server" --fields label=DO_TOKEN_CCC_120823_2A)
+
+# Note that this set of tf env vars has `&&` connecting them, so copy & paste them as a block.
+export TF_VAR_LINUX_USER_DEVOPS_2A=$(op item get "ClicksAndCodes 2A server" --fields label=LINUX_USER_DEVOPS_2A) &&
+export TF_VAR_LINUX_SSH_KEY_2A=$(op item get "ClicksAndCodes 2A server" --fields label=LINUX_SSH_KEY_2A) &&
+export TF_VAR_LINUX_SERVER_NAME_2A=$(op item get "ClicksAndCodes 2A server" --fields label=LINUX_SERVER_NAME_2A)
+```
+___________________________
+___________________________
+___________________________
+
 ### Notes with additional detail
 
-For this project, we will use all new env vars, secrets, keys, etc.
+For each server, we will use all new env vars, secrets, keys, etc.
 
 - add ssh key
   - to generate new ssh key: `ssh-keygen -t ed25519 -C "emailAddressHere"`
