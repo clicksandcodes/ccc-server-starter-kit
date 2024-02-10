@@ -1,4 +1,10 @@
 
+# ToDo
+
+### Next time I delete/re-create server 2A:
+
+- change the filename `tf-with-envvars.tf` to `tf-with-envvars_2a.tf`
+  
 ____________
 ###  Terraform 
 
@@ -59,6 +65,10 @@ ______________________________
   - Assets:
     - 1 strapi CMS
     - 1 nextJS client
+
+- **Project 3:**
+  - Name: pmeaney.com
+  - Description: portfolio site as a NextJS site
 
 - Local laptop Directory: /Users/patrickmeaney/localhost/0-aa-production/ ??????
 

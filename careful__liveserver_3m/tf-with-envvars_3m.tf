@@ -23,19 +23,19 @@ locals {
 provider "digitalocean" {}
 
 # the SERVER_NAME is not as important to set via env var... but we will go ahead and do it
-variable "LINUX_SERVER_NAME_2A" {
+variable "LINUX_SERVER_NAME_3M" {
   type = string
   description = "environment variable for devops user"
   default = "blahServerName"
 }
 
-variable "LINUX_USER_DEVOPS_2A" {
+variable "LINUX_USER_DEVOPS_3M" {
   type = string
   description = "environment variable for devops user"
   default = "blahLinxUser"
 }
 
-variable "LINUX_SSH_KEY_2A" {
+variable "LINUX_SSH_KEY_3M" {
   type = string
   description = "environment variable for devops ssh key"
   default = "blahSshKey"
@@ -44,14 +44,14 @@ variable "LINUX_SSH_KEY_2A" {
 data "template_file" "my_example_user_data" {
   template = templatefile("./yamlScripts/with-envVars.yaml",
     {
-      LINUX_USER_DEVOPS_2A = "${var.LINUX_USER_DEVOPS_2A}",
-      LINUX_SSH_KEY_2A = "${var.LINUX_SSH_KEY_2A}",
+      LINUX_USER_DEVOPS_3M = "${var.LINUX_USER_DEVOPS_3M}",
+      LINUX_SSH_KEY_3M = "${var.LINUX_SSH_KEY_3M}",
     })
 }
 
 resource "digitalocean_droplet" "droplet" {
   image     = "ubuntu-22-04-x64"
-  name      = "${var.LINUX_SERVER_NAME_2A}"
+  name      = "${var.LINUX_SERVER_NAME_3M}"
   region    = local.regions.san_francisco
   size      = local.sizes.nano
   tags      = ["terraform", "docker"]
@@ -68,14 +68,14 @@ output "ip_address" {
 #   value = data.template_file.my_example_user_data.rendered
 # }
 
-# output "LINUX_SERVER_NAME_2A" {
-#   value = "${var.LINUX_SERVER_NAME_2A}"
+# output "LINUX_SERVER_NAME_3M" {
+#   value = "${var.LINUX_SERVER_NAME_3M}"
 # }
 
-# output "LINUX_USER_DEVOPS_2A" {
-#   value = "${var.LINUX_USER_DEVOPS_2A}"
+# output "LINUX_USER_DEVOPS_3M" {
+#   value = "${var.LINUX_USER_DEVOPS_3M}"
 # }
 
-# output "LINUX_SSH_KEY_2A" {
-#   value = "${var.LINUX_SSH_KEY_2A}"
+# output "LINUX_SSH_KEY_3M" {
+#   value = "${var.LINUX_SSH_KEY_3M}"
 # }
