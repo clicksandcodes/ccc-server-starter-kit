@@ -29,6 +29,10 @@ Host *
   AddKeysToAgent yes
   UseKeychain yes
   IdentityFile ~/.ssh/yourKeyFilename
+
+# Next, add the new key to your apple OS keychain: (the private, not .pub key)
+ssh-add --apple-use-keychain ~/.ssh/nameOrPathTosshKey
+
 ```
 
 
@@ -51,6 +55,18 @@ ______________________________
   - none yet
 
 **List of Digital Projects on the server:**
+
+Steps:
+- Spin up with Terraform see directory `careful__liveserver_3m`
+- Manually create NGINX http, certbot -> certs, NGINX https.  The nginx & certbot stuff is located in the local app directory `/Users/patrickmeaney/localhost/0-aa-production/1-ccc-projects-apps/ccc-template-sites-nextjs` at `/Users/patrickmeaney/localhost/0-aa-production/1-ccc-projects-apps/ccc-template-sites-nextjs/ccc-nginx-certbot-021024-manual`
+- Next, 
+  - docker packaging process --  We'll package each nextjs project as a docker package.
+    - create it. docker build.
+    - docker publish
+    - then docker run on remote.
+
+Ideally, all of these will be docker packaged, published, then pulled down onto the server.
+
 
 - **Project 1:**
   - Name: NextJS Placeholder Website
