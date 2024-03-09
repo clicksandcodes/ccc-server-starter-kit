@@ -2,13 +2,28 @@
 
 https://awstip.com/how-to-create-digitalocean-droplet-using-terraform-a-z-guide-df91716f6021
 
-# ToDo
-
-### Next time I delete/re-create server 2A:
-
-- change the filename `tf-with-envvars.tf` to `tf-with-envvars_2a.tf`
-
 ---
+
+### When creating a new ssh key
+
+On MacOS
+
+- Don't forget to:
+  - add the private ssh key to ssh config file: `~/.ssh/config`
+  - add the private ssh key to ssh key chain: `ssh-add ~/.ssh/someKeyName`
+
+### 1password env vars - 4m_debian
+
+```bash
+# tf only picks up env vars that are prefixed with TF_VAR_
+# The DigitalOcean token is not used within the TF script so it does not need the TF_VAR_ prefix.
+export DIGITALOCEAN_ACCESS_TOKEN=$(op item get "ClicksAndCodes 4M_debian server" --fields label=DO_TOKEN_CCC_030924_4m_debian)
+
+# Note that this set of tf env vars has `&&` connecting them, so copy & paste them as a block.
+export TF_VAR_LINUX_USER_DEVOPS_4m_debian=$(op item get "ClicksAndCodes 4M_debian server" --fields label=LINUX_USER_DEVOPS_4m_debian) &&
+export TF_VAR_LINUX_SSH_KEY_4m_debian=$(op item get "ClicksAndCodes 4M_debian server" --fields label=LINUX_SSH_KEY_4m_debian) &&
+export TF_VAR_LINUX_SERVER_NAME_4m_debian=$(op item get "ClicksAndCodes 4M_debian server" --fields label=LINUX_SERVER_NAME_4m_debian)
+```
 
 ### Terraform
 
