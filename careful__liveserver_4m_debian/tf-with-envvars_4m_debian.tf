@@ -50,7 +50,7 @@ data "template_file" "my_example_user_data" {
 }
 
 resource "digitalocean_droplet" "droplet" {
-  image     = "ubuntu-22-04-x64"
+  image     = "debian-12-x64"
   name      = "${var.LINUX_SERVER_NAME_3M}"
   region    = local.regions.san_francisco
   size      = local.sizes.nano
