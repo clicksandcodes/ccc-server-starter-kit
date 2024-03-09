@@ -13,35 +13,21 @@ users:
     lock_passwd: false
     ssh_authorized_keys: ${LINUX_SSH_KEY_4m_debian}
 
+chpasswd:
+  expire: false
+  users:
+    - name: ${LINUX_USER_DEVOPS_4m_debian}
+      password: ${LINUX_USER_PW_DEVOPS_4m_debian}
+      type: text
+
 runcmd:
-  # - sudo NEEDRESTART_MODE=a apt-get dist-upgrade --yes
-  # - sudo DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
-  - sudo apt-get -y update
-  # - sudo apt -y install apt-transport-https ca-certificates curl
-  #   software-properties-common net-tools
-  # - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  # - sudo add-apt-repository "deb [arch=amd64]
-  #   https://download.docker.com/linux/ubuntu jammy stable"
-  # - sudo apt -y update
-  # - sudo apt-cache policy docker-ce && apt-get -y install docker-ce
-  # - sudo usermod -aG docker ${LINUX_USER_DEVOPS_4m_debian}
-  # - sudo curl -SL
-  #   https://github.com/docker/compose/releases/download/v2.20.0/docker-compose-linux-x86_64
-  #   -o /usr/local/bin/docker-compose
-  # - sudo chmod +x /usr/local/bin/docker-compose
-  # - sudo snap install gh
-  ##### START zsh section
-  # https://bluevps.com/blog/how-to-install-oh-my-zsh-on-ubuntu-2204
-  # - sudo apt clean
-  # - sudo apt install -y git zsh
-  # - sudo chsh -s /usr/bin/zsh
-  # - sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  # to add zsh-autosuggestions to ~/.zshrc
-  # Note: first install zsh-autosuggestions
-  # Note: this sed command is not idempotent -- may need improvement
-  # - sed -i -E '/plugins=\(([^)]+)\)/s//plugins=(\1 zsh-autosuggestions)/'
-  ##### END zsh section
-  # - echo 'deb http://download.opensuse.org/repositories/shells:/zsh-users:/zsh-autosuggestions/xUbuntu_22.04/ /' | sudo tee /etc/apt/sources.list.d/shells:zsh-users:zsh-autosuggestions.list
-  # - curl -fsSL https://download.opensuse.org/repositories/shells:zsh-users:zsh-autosuggestions/xUbuntu_22.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_zsh-users_zsh-autosuggestions.gpg > /dev/null
-  # - sudo apt update
-  # - sudo apt install zsh-autosuggestions
+  - sudo apt-get update
+  - curl -fsSL get.docker.com | bash
+  - sudo usermod -aG docker ${LINUX_USER_DEVOPS_4m_debian}
+  - apt install -y zsh
+  - echo '${LINUX_USER_DEVOPS_4m_debian}:${LINUX_USER_PW_DEVOPS_4m_debian}' | sudo chpasswd
+  # May want to change this to `chsh -s $(which zsh)` -- because:
+  # `chsh -s /usr/bin/zsh` may not work on some distros, maybe on mac even. It is better to run `chsh -s $(which zsh)`, because some distros change where some binary executables are stored -- wantyapps
+  - chsh -s /usr/bin/zsh
+  - zsh
+  - sudo -u ${LINUX_USER_DEVOPS_4m_debian} sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"

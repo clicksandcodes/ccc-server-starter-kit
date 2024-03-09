@@ -32,7 +32,13 @@ variable "LINUX_SERVER_NAME_4m_debian" {
 variable "LINUX_USER_DEVOPS_4m_debian" {
   type = string
   description = "environment variable for devops user"
-  default = "blahLinxUser"
+  default = "blahLinuxUser"
+}
+
+variable "LINUX_USER_PW_DEVOPS_4m_debian" {
+  type = string
+  description = "environment variable for devops users password"
+  default = "blahLinuxUserPassword"
 }
 
 variable "LINUX_SSH_KEY_4m_debian" {
@@ -45,12 +51,13 @@ data "template_file" "my_example_user_data" {
   template = templatefile("./yamlScripts/with-envVars.yaml",
     {
       LINUX_USER_DEVOPS_4m_debian = "${var.LINUX_USER_DEVOPS_4m_debian}",
+      LINUX_USER_PW_DEVOPS_4m_debian = "${var.LINUX_USER_PW_DEVOPS_4m_debian}",
       LINUX_SSH_KEY_4m_debian = "${var.LINUX_SSH_KEY_4m_debian}",
     })
 }
 
 resource "digitalocean_droplet" "droplet" {
-  image     = "ubuntu-22-04-x64"
+  image     = "debian-12-x64"
   name      = "${var.LINUX_SERVER_NAME_4m_debian}"
   region    = local.regions.san_francisco
   size      = local.sizes.nano
