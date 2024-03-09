@@ -50,7 +50,7 @@ data "template_file" "my_example_user_data" {
 }
 
 resource "digitalocean_droplet" "droplet" {
-  image     = "ubuntu-22-04-x64"
+  image     = "debian-12-x64"
   name      = "${var.LINUX_SERVER_NAME_4m_debian}"
   region    = local.regions.san_francisco
   size      = local.sizes.nano
@@ -66,6 +66,27 @@ output "ip_address" {
 output "tf_apply_timestamp" {
   value       = timestamp()
   description = "Timestamp of apply"
+}
+
+# https://www.tinfoilcipher.co.uk/2020/10/19/terraform-tricks-working-with-timestamps/
+locals {
+    current_timestamp  = timestamp()
+    current_day        = formatdate("YYYY-MM-DD", local.current_timestamp)
+    current_time       = formatdate("hh:mm:ss", local.current_timestamp)
+    current_day_name   = formatdate("EEEE", local.current_timestamp)
+}
+
+output "current_timestamp" {
+    value = local.current_timestamp
+}
+output "current_day" {
+    value = local.current_day
+}
+output "current_time" {
+    value = local.current_time
+}
+output "current_day_name" {
+    value = local.current_day_name
 }
 
 # If you want to make sure the yaml file was properly filled with env vars, you can uncomment this output statement and terraform will show the env vars in situ

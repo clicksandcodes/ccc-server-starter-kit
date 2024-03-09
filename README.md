@@ -15,11 +15,7 @@ On MacOS
 ### 1password env vars - 4m_debian
 
 ```bash
-# tf only picks up env vars that are prefixed with TF_VAR_
-# The DigitalOcean token is not used within the TF script so it does not need the TF_VAR_ prefix.
-export DIGITALOCEAN_ACCESS_TOKEN=$(op item get "ClicksAndCodes 4M_debian server" --fields label=DO_TOKEN_CCC_030924_4m_debian)
-
-# Note that this set of tf env vars has `&&` connecting them, so copy & paste them as a block.
+export DIGITALOCEAN_ACCESS_TOKEN=$(op item get "ClicksAndCodes 4M_debian server" --fields label=DO_TOKEN_CCC_030924_4m_debian) &&
 export TF_VAR_LINUX_USER_DEVOPS_4m_debian=$(op item get "ClicksAndCodes 4M_debian server" --fields label=LINUX_USER_DEVOPS_4m_debian) &&
 export TF_VAR_LINUX_SSH_KEY_4m_debian=$(op item get "ClicksAndCodes 4M_debian server" --fields label=LINUX_SSH_KEY_4m_debian) &&
 export TF_VAR_LINUX_SERVER_NAME_4m_debian=$(op item get "ClicksAndCodes 4M_debian server" --fields label=LINUX_SERVER_NAME_4m_debian)

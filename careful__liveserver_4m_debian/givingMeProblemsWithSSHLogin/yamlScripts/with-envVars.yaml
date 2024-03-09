@@ -11,25 +11,39 @@ users:
     sudo: ALL=(ALL) NOPASSWD:ALL
     groups: users, admin, docker
     lock_passwd: false
-    ssh_authorized_keys: ${LINUX_SSH_KEY_4m_debian}
+    ssh_authorized_keys:
+      - ${LINUX_SSH_KEY_4m_debian}
+
+ssh_pwauth: false
 
 runcmd:
+  # thanks peac!
+  - sudo apt-get update
+  - curl -fsSL get.docker.com | bash
+  - sudo usermod -aG docker ${LINUX_USER_DEVOPS_4m_debian}
+  - sudo apt install -y zsh
+  - chsh -s /usr/bin/zsh
+  - sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  ######### Prior to Mar 08, 2024 – 06:12 pm
   # - sudo NEEDRESTART_MODE=a apt-get dist-upgrade --yes
   # - sudo DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
-  - sudo apt-get -y update
-  # - sudo apt -y install apt-transport-https ca-certificates curl
+  # - sudo apt-get -y update
+  # - sudo apt-get -y install apt-transport-https ca-certificates curl
   #   software-properties-common net-tools
-  # - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  # - sudo add-apt-repository "deb [arch=amd64]
-  #   https://download.docker.com/linux/ubuntu jammy stable"
-  # - sudo apt -y update
-  # - sudo apt-cache policy docker-ce && apt-get -y install docker-ce
+  # - curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+  # - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian bookworm stable"
+  # - sudo apt-get update
+  # - curl -fsSL get.docker.com | bash
+  # - sudo usermod -aG docker ${LINUX_USER_DEVOPS_4m_debian}
+  # - sudo apt install -y zsh
+  # - sudo chsh -s /usr/bin/zsh
+  # - sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  # - sudo apt-cache policy docker-ce && apt-get -y install docker-ce docker-ce-cli containerd.io
   # - sudo usermod -aG docker ${LINUX_USER_DEVOPS_4m_debian}
   # - sudo curl -SL
   #   https://github.com/docker/compose/releases/download/v2.20.0/docker-compose-linux-x86_64
   #   -o /usr/local/bin/docker-compose
   # - sudo chmod +x /usr/local/bin/docker-compose
-  # - sudo snap install gh
   ##### START zsh section
   # https://bluevps.com/blog/how-to-install-oh-my-zsh-on-ubuntu-2204
   # - sudo apt clean
