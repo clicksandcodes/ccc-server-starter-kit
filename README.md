@@ -15,6 +15,7 @@ On MacOS
 ### 1password env vars - 4m_debian
 
 ```bash
+#
 export DIGITALOCEAN_ACCESS_TOKEN=$(op item get "ClicksAndCodes 4M_debian server" --fields label=DO_TOKEN_CCC_030924_4m_debian) &&
 export TF_VAR_LINUX_USER_DEVOPS_4m_debian=$(op item get "ClicksAndCodes 4M_debian server" --fields label=LINUX_USER_DEVOPS_4m_debian) &&
 export TF_VAR_LINUX_SSH_KEY_4m_debian=$(op item get "ClicksAndCodes 4M_debian server" --fields label=LINUX_SSH_KEY_4m_debian) &&
