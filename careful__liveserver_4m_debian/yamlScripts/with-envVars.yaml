@@ -28,6 +28,7 @@ runcmd:
   - echo '${LINUX_USER_DEVOPS_4m_debian}:${LINUX_USER_PW_DEVOPS_4m_debian}' | sudo chpasswd
   # May want to change this to `chsh -s $(which zsh)` -- because:
   # `chsh -s /usr/bin/zsh` may not work on some distros, maybe on mac even. It is better to run `chsh -s $(which zsh)`, because some distros change where some binary executables are stored -- wantyapps
-  - chsh -s /usr/bin/zsh
+  # - chsh -s /usr/bin/zsh
+  - chsh -s `which zsh` ${LINUX_USER_DEVOPS_4m_debian}
   - zsh
   - sudo -u ${LINUX_USER_DEVOPS_4m_debian} sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
